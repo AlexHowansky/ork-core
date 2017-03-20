@@ -1,4 +1,4 @@
-# \Ork\Core
+# Ork Core
 
 Core bits of the Ork toolset.
 
@@ -26,11 +26,11 @@ $ composer doc
 
 # Testing
 ```bash
-composer test
+$ composer test
 ```
 
 # Code Styling Validation
 ```bash
-composer phpcs
+$ composer phpcs
 ```
 
