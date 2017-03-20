@@ -1,3 +1,5 @@
+[![Build Status](https://secure.travis-ci.org/AlexHowansky/ork-core.svg?branch=master)](https://secure.travis-ci.org/AlexHowansky/ork-core)
+
 # Ork Core
 
 Core bits of the Ork toolset.
