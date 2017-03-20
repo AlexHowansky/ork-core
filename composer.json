@@ -1,0 +1,39 @@
+{
+    "name": "ork/core",
+    "type": "library",
+    "description": "Core bits of the Ork toolset.",
+    "keywords": ["ork"],
+    "homepage": "http://github.com/AlexHowansky/ork-core",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alex Howansky",
+            "email": "alex.howansky@gmail.com",
+            "homepage": "https://github.com/AlexHowansky"
+        }
+    ],
+    "require": {
+        "php": "^7.1"
+    },
+    "require-dev": {
+        "mikey179/vfsStream": "^1.6.4",
+        "ork/phpcs": "^1.4.1",
+        "phpdocumentor/phpdocumentor": "^2.9.0",
+        "phpunit/phpunit": "^6.0.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ork\\Core\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "OrkTest\\Core\\": "test/"
+        }
+    },
+    "scripts": {
+        "doc": "phpdoc -d src -t doc",
+        "phpcs": "phpcs",
+        "test": "phpunit"
+    }
+}
