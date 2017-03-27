@@ -166,7 +166,7 @@ trait ConfigurableTrait
      *
      * @throws \UnexpectedValueException If the named configuration attribute does not exist.
      */
-    protected function validateConfig(string $name)
+    protected function validateConfig(string $name): self
     {
         if (array_key_exists($name, $this->config) === false) {
             throw new \UnexpectedValueException('No such configuration attribute: ' . $name);

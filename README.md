@@ -35,4 +35,3 @@ $ composer test
 ```bash
 $ composer phpcs
 ```
-
