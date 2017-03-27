@@ -4,34 +4,36 @@
 
 Core bits of the Ork toolset.
 
-# Requirements
+## Requirements
 * PHP 7.1
 
-# Installation
+## Installation
 
-## Via command line:
+### Via command line:
 ```bash
 $ composer require ork/core
 ```
 
-## Via composer.json:
+### Via composer.json:
 ```json
 "require": {
     "ork/core": "*"
 },
 ```
 
-# Generate Documentation
-```bash
-$ composer doc
-```
+## Development
 
-# Testing
+### Testing
 ```bash
 $ composer test
 ```
 
-# Code Styling Validation
+### Generate Documentation
+```bash
+$ composer doc
+```
+
+### Code Styling Validation
 ```bash
 $ composer phpcs
 ```
