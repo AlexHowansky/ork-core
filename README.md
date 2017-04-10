@@ -23,7 +23,7 @@ $ composer require ork/core
 
 ## Documentation
 
-See the [wiki](wiki).
+See the [wiki](https://github.com/AlexHowansky/ork-core/wiki).
 
 ## Development
 
