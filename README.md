@@ -1,4 +1,6 @@
 [![Build Status](https://secure.travis-ci.org/AlexHowansky/ork-core.svg?branch=master)](https://secure.travis-ci.org/AlexHowansky/ork-core)
+[![Latest Stable Version](https://poser.pugx.org/ork/core/v/stable)](https://packagist.org/packages/ork/core)
+[![License](https://poser.pugx.org/ork/core/license)](https://packagist.org/packages/ork/core)
 
 # Ork Core
 
