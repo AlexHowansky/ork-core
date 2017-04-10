@@ -21,6 +21,10 @@ $ composer require ork/core
 },
 ```
 
+## Documentation
+
+See the [wiki](wiki).
+
 ## Development
 
 ### Testing
@@ -28,7 +32,7 @@ $ composer require ork/core
 $ composer test
 ```
 
-### Generate Documentation
+### Generate API Documentation
 ```bash
 $ composer doc
 ```

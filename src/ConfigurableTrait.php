@@ -13,25 +13,6 @@ namespace Ork\Core;
 
 /**
  * Defines a trait for consistent configuration of object features.
- *
- * Objects often are created with many protected properties and a collection of mutators to set and get them. This
- * trait attempts to alleviate that requirement somewhat by offering a common mechanism to define object configuration
- * parameters, create mutators, and filter valid configuration values.
- *
- * Classes using this trait must define a protected array named `$config`, which contains (as keys) the names of the
- * configuration values and optionally (as values) a default value. For example:
- *
- * ```php
- * protected $config = [
- *     'foo' => null,
- *     'bar' => 1,
- * ];
- * ```
- *
- * You may optionally create methods to pre-process values before they are set. For example, if the object has a method
- * named filterConfigFoo(), then a call to `$obj->setConfig('foo', $value)` will result in `foo` being set to the
- * value returned by `$obj->filterConfigFoo($value)`. If the filter method rejects a value, it should throw a
- * DomainException.
  */
 trait ConfigurableTrait
 {
