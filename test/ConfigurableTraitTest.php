@@ -17,6 +17,11 @@ use PHPUnit\Framework\TestCase;
 class ConfigurableTraitTest extends TestCase
 {
 
+    /**
+     * Test values.
+     *
+     * @var array
+     */
     protected $config = [
         'key1' => 'value1',
         'key2' => 12345,
@@ -24,16 +29,10 @@ class ConfigurableTraitTest extends TestCase
     ];
 
     /**
-     * @expectedException \LogicException
+     * Test that the constructor works when passed an array.
+     *
+     * @return void
      */
-    public function testNoConfigDefined()
-    {
-        $this->assertObjectNotHasAttribute(
-            'config',
-            new Stub\ConfigurableTraitStubUnconfigured()
-        );
-    }
-
     public function testConstructorArray()
     {
         $this->assertSame(
@@ -42,14 +41,25 @@ class ConfigurableTraitTest extends TestCase
         );
     }
 
-    public function testConstructorIterable()
+    /**
+     * Test that the constructor fails when passed a badly formatted file.
+     *
+     * @return void
+     *
+     * @expectedException \RuntimeException
+     */
+    public function testConstructorBadFile()
     {
-        $this->assertSame(
-            $this->config,
-            (new Stub\ConfigurableTraitStubConfigured(new \ArrayIterator($this->config)))->getConfigs()
-        );
+        $file = vfsStream::setup()->url() . '/config.json';
+        file_put_contents($file, 'fail');
+        new Stub\ConfigurableTraitStubConfigured($file);
     }
 
+    /**
+     * Test that the constructor works when passed a file name.
+     *
+     * @return void
+     */
     public function testConstructorFile()
     {
         $file = vfsStream::setup()->url() . '/config.json';
@@ -61,6 +71,10 @@ class ConfigurableTraitTest extends TestCase
     }
 
     /**
+     * Test that the constructor fails when passed an integer.
+     *
+     * @return void
+     *
      * @expectedException \TypeError
      */
     public function testConstructorInteger()
@@ -69,14 +83,23 @@ class ConfigurableTraitTest extends TestCase
     }
 
     /**
-     * @expectedException \TypeError
+     * Test that the constructor works when passed an object implementing Iterable.
+     *
+     * @return void
      */
-    public function testConstructorNotIterable()
+    public function testConstructorIterable()
     {
-        new Stub\ConfigurableTraitStubConfigured(new \stdClass());
+        $this->assertSame(
+            $this->config,
+            (new Stub\ConfigurableTraitStubConfigured(new \ArrayIterator($this->config)))->getConfigs()
+        );
     }
 
     /**
+     * Test that the constructor fails when passed a file name that doesn't exist.
+     *
+     * @return void
+     *
      * @expectedException \RuntimeException
      */
     public function testConstructorNoFile()
@@ -85,15 +108,34 @@ class ConfigurableTraitTest extends TestCase
     }
 
     /**
-     * @expectedException \RuntimeException
+     * Test that the constructor fails when passed an object which does not implement Iterator.
+     *
+     * @return void
+     *
+     * @expectedException \TypeError
      */
-    public function testConstructorBadFile()
+    public function testConstructorNotIterable()
     {
-        $file = vfsStream::setup()->url() . '/config.json';
-        file_put_contents($file, 'fail');
-        new Stub\ConfigurableTraitStubConfigured($file);
+        new Stub\ConfigurableTraitStubConfigured(new \stdClass());
     }
 
+    /**
+     * Test that a defined setter filter gets invoked.
+     *
+     * @return void
+     *
+     * @expectedException \DomainException
+     */
+    public function testFilterException()
+    {
+        (new Stub\ConfigurableTraitStubConfigured())->setConfig('key3', 'this is a bad value');
+    }
+
+    /**
+     * Test that the initial configured values get set and returned correctly.
+     *
+     * @return void
+     */
     public function testGetDefaultValue()
     {
         $stub = new Stub\ConfigurableTraitStubConfigured();
@@ -102,26 +144,26 @@ class ConfigurableTraitTest extends TestCase
         $this->assertNull($stub->getConfig('key3'));
     }
 
-    public function testSetAndGetInteger()
+    /**
+     * Test that we get a failure when an object is defined without a $config attribute.
+     *
+     * @expectedException \LogicException
+     *
+     * @return void
+     */
+    public function testNoConfigDefined()
     {
-        $stub = new Stub\ConfigurableTraitStubConfigured();
-        foreach (array_keys($this->config) as $key) {
-            $value = mt_rand();
-            $stub->setConfig($key, $value);
-            $this->assertSame($value, $stub->getConfig($key));
-        }
+        $this->assertObjectNotHasAttribute(
+            'config',
+            new Stub\ConfigurableTraitStubUnconfigured()
+        );
     }
 
-    public function testSetAndGetString()
-    {
-        $stub = new Stub\ConfigurableTraitStubConfigured();
-        foreach (array_keys($this->config) as $key) {
-            $value = md5($key . ':' . microtime(true));
-            $stub->setConfig($key, $value);
-            $this->assertSame($value, $stub->getConfig($key));
-        }
-    }
-
+    /**
+     * Test that array config values set and get correctly.
+     *
+     * @return void
+     */
     public function testSetAndGetArray()
     {
         $stub = new Stub\ConfigurableTraitStubConfigured();
@@ -133,6 +175,26 @@ class ConfigurableTraitTest extends TestCase
         $this->assertSame($config, $stub->getConfigs());
     }
 
+    /**
+     * Test that integer config values set and get correctly.
+     *
+     * @return void
+     */
+    public function testSetAndGetInteger()
+    {
+        $stub = new Stub\ConfigurableTraitStubConfigured();
+        foreach (array_keys($this->config) as $key) {
+            $value = mt_rand();
+            $stub->setConfig($key, $value);
+            $this->assertSame($value, $stub->getConfig($key));
+        }
+    }
+
+    /**
+     * Test that object config values set and get correctly.
+     *
+     * @return void
+     */
     public function testSetAndGetObject()
     {
         $stub = new Stub\ConfigurableTraitStubConfigured();
@@ -146,19 +208,30 @@ class ConfigurableTraitTest extends TestCase
     }
 
     /**
+     * Test that string config values set and get correctly.
+     *
+     * @return void
+     */
+    public function testSetAndGetString()
+    {
+        $stub = new Stub\ConfigurableTraitStubConfigured();
+        foreach (array_keys($this->config) as $key) {
+            $value = md5($key . ':' . microtime(true));
+            $stub->setConfig($key, $value);
+            $this->assertSame($value, $stub->getConfig($key));
+        }
+    }
+
+    /**
+     * Trying to set a config parameter that doesn't exist should error.
+     *
+     * @return void
+     *
      * @expectedException \UnexpectedValueException
      */
     public function testSetInvalidKey()
     {
         (new Stub\ConfigurableTraitStubConfigured())->setConfig('badKey', 'badValue');
-    }
-
-    /**
-     * @expectedException \DomainException
-     */
-    public function testFilterException()
-    {
-        (new Stub\ConfigurableTraitStubConfigured())->setConfig('key3', 'this is a bad value');
     }
 
 }
