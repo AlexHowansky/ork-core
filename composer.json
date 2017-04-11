@@ -32,7 +32,7 @@
         }
     },
     "scripts": {
-        "doc": "phpdoc -d src -t doc",
+        "doc": "phpdoc -d src -t doc --template responsive-twig",
         "phpcs": "phpcs",
         "test": "phpunit"
     }
