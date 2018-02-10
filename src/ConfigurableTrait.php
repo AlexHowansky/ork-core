@@ -17,8 +17,10 @@ namespace Ork\Core;
 trait ConfigurableTrait
 {
 
-    // We can't declare an empty/default $config here because the PHP trait
-    // implementation requires that all definitions match exactly.
+    /**
+     * We can't declare an empty/default $config here because the PHP trait
+     * implementation requires that all definitions match exactly.
+     */
 
     /**
      * Constructor.
