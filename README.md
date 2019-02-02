@@ -19,7 +19,7 @@ $ composer require ork/core
 ### Via composer.json:
 ```json
 "require": {
-    "ork/core": "*"
+    "ork/core": "^1.0.0"
 },
 ```
 

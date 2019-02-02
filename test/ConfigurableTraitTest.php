@@ -45,11 +45,10 @@ class ConfigurableTraitTest extends TestCase
      * Test that the constructor fails when passed a badly formatted file.
      *
      * @return void
-     *
-     * @expectedException \RuntimeException
      */
     public function testConstructorBadFile()
     {
+        $this->expectException(\RuntimeException::class);
         $file = vfsStream::setup()->url() . '/config.json';
         file_put_contents($file, 'fail');
         new Stub\ConfigurableTraitStubConfigured($file);
@@ -74,11 +73,10 @@ class ConfigurableTraitTest extends TestCase
      * Test that the constructor fails when passed an integer.
      *
      * @return void
-     *
-     * @expectedException \TypeError
      */
     public function testConstructorInteger()
     {
+        $this->expectException(\TypeError::class);
         new Stub\ConfigurableTraitStubConfigured(1);
     }
 
@@ -99,11 +97,10 @@ class ConfigurableTraitTest extends TestCase
      * Test that the constructor fails when passed a file name that doesn't exist.
      *
      * @return void
-     *
-     * @expectedException \RuntimeException
      */
     public function testConstructorNoFile()
     {
+        $this->expectException(\RuntimeException::class);
         new Stub\ConfigurableTraitStubConfigured(vfsStream::setup()->url() . '/path/to/bad/file');
     }
 
@@ -111,11 +108,10 @@ class ConfigurableTraitTest extends TestCase
      * Test that the constructor fails when passed an object which does not implement Iterator.
      *
      * @return void
-     *
-     * @expectedException \TypeError
      */
     public function testConstructorNotIterable()
     {
+        $this->expectException(\TypeError::class);
         new Stub\ConfigurableTraitStubConfigured(new \stdClass());
     }
 
@@ -123,11 +119,10 @@ class ConfigurableTraitTest extends TestCase
      * Test that a defined setter filter gets invoked.
      *
      * @return void
-     *
-     * @expectedException \DomainException
      */
     public function testFilterException()
     {
+        $this->expectException(\DomainException::class);
         (new Stub\ConfigurableTraitStubConfigured())->setConfig('key3', 'this is a bad value');
     }
 
@@ -147,12 +142,11 @@ class ConfigurableTraitTest extends TestCase
     /**
      * Test that we get a failure when an object is defined without a $config attribute.
      *
-     * @expectedException \LogicException
-     *
      * @return void
      */
     public function testNoConfigDefined()
     {
+        $this->expectException(\LogicException::class);
         $this->assertObjectNotHasAttribute(
             'config',
             new Stub\ConfigurableTraitStubUnconfigured()
@@ -226,11 +220,10 @@ class ConfigurableTraitTest extends TestCase
      * Trying to set a config parameter that doesn't exist should error.
      *
      * @return void
-     *
-     * @expectedException \UnexpectedValueException
      */
     public function testSetInvalidKey()
     {
+        $this->expectException(\UnexpectedValueException::class);
         (new Stub\ConfigurableTraitStubConfigured())->setConfig('badKey', 'badValue');
     }
 
