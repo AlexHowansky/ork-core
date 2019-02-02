@@ -13,11 +13,13 @@
         }
     ],
     "require": {
-        "php": "^7.1"
+        "php": "^7.2"
     },
     "require-dev": {
         "mikey179/vfsStream": "^1.6.5",
         "ork/phpcs": "^2.0.7",
+        "pds/skeleton": "^1.0.0",
+        "phpstan/phpstan": "^0.11.1",
         "phpunit/phpunit": "^8.0.0"
     },
     "autoload": {
@@ -27,11 +29,13 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "OrkTest\\Core\\": "test/"
+            "OrkTest\\Core\\": "tests/"
         }
     },
     "scripts": {
         "phpcs": "phpcs",
+        "phpstan": "phpstan analyze",
+        "skeleton": "pds-skeleton validate",
         "test": "phpunit"
     }
 }

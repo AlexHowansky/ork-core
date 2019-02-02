@@ -4,7 +4,7 @@
  * Ork
  *
  * @package   OrkTest\Core
- * @copyright 2015-2017 Alex Howansky (https://github.com/AlexHowansky)
+ * @copyright 2015-2019 Alex Howansky (https://github.com/AlexHowansky)
  * @license   https://github.com/AlexHowansky/ork-core/blob/master/LICENSE MIT License
  * @link      https://github.com/AlexHowansky/ork-core
  */
@@ -37,7 +37,7 @@ class ConfigurableTraitTest extends TestCase
     {
         $this->assertSame(
             $this->config,
-            (new Stub\ConfigurableTraitStubConfigured($this->config))->getConfigs()
+            (new Fake\ConfigurableTraitConfigured($this->config))->getConfigs()
         );
     }
 
@@ -51,7 +51,7 @@ class ConfigurableTraitTest extends TestCase
         $this->expectException(\RuntimeException::class);
         $file = vfsStream::setup()->url() . '/config.json';
         file_put_contents($file, 'fail');
-        new Stub\ConfigurableTraitStubConfigured($file);
+        new Fake\ConfigurableTraitConfigured($file);
     }
 
     /**
@@ -65,7 +65,7 @@ class ConfigurableTraitTest extends TestCase
         file_put_contents($file, json_encode($this->config));
         $this->assertSame(
             $this->config,
-            (new Stub\ConfigurableTraitStubConfigured($file))->getConfigs()
+            (new Fake\ConfigurableTraitConfigured($file))->getConfigs()
         );
     }
 
@@ -77,7 +77,7 @@ class ConfigurableTraitTest extends TestCase
     public function testConstructorInteger()
     {
         $this->expectException(\TypeError::class);
-        new Stub\ConfigurableTraitStubConfigured(1);
+        new Fake\ConfigurableTraitConfigured(1);
     }
 
     /**
@@ -89,7 +89,7 @@ class ConfigurableTraitTest extends TestCase
     {
         $this->assertSame(
             $this->config,
-            (new Stub\ConfigurableTraitStubConfigured(new \ArrayIterator($this->config)))->getConfigs()
+            (new Fake\ConfigurableTraitConfigured(new \ArrayIterator($this->config)))->getConfigs()
         );
     }
 
@@ -101,7 +101,7 @@ class ConfigurableTraitTest extends TestCase
     public function testConstructorNoFile()
     {
         $this->expectException(\RuntimeException::class);
-        new Stub\ConfigurableTraitStubConfigured(vfsStream::setup()->url() . '/path/to/bad/file');
+        new Fake\ConfigurableTraitConfigured(vfsStream::setup()->url() . '/path/to/bad/file');
     }
 
     /**
@@ -112,7 +112,7 @@ class ConfigurableTraitTest extends TestCase
     public function testConstructorNotIterable()
     {
         $this->expectException(\TypeError::class);
-        new Stub\ConfigurableTraitStubConfigured(new \stdClass());
+        new Fake\ConfigurableTraitConfigured(new \stdClass());
     }
 
     /**
@@ -123,7 +123,7 @@ class ConfigurableTraitTest extends TestCase
     public function testFilterException()
     {
         $this->expectException(\DomainException::class);
-        (new Stub\ConfigurableTraitStubConfigured())->setConfig('key3', 'this is a bad value');
+        (new Fake\ConfigurableTraitConfigured())->setConfig('key3', 'this is a bad value');
     }
 
     /**
@@ -133,10 +133,10 @@ class ConfigurableTraitTest extends TestCase
      */
     public function testGetDefaultValue()
     {
-        $stub = new Stub\ConfigurableTraitStubConfigured();
-        $this->assertSame('default1', $stub->getConfig('key1'));
-        $this->assertSame(12345, $stub->getConfig('key2'));
-        $this->assertNull($stub->getConfig('key3'));
+        $fake = new Fake\ConfigurableTraitConfigured();
+        $this->assertSame('default1', $fake->getConfig('key1'));
+        $this->assertSame(12345, $fake->getConfig('key2'));
+        $this->assertNull($fake->getConfig('key3'));
     }
 
     /**
@@ -149,7 +149,7 @@ class ConfigurableTraitTest extends TestCase
         $this->expectException(\LogicException::class);
         $this->assertObjectNotHasAttribute(
             'config',
-            new Stub\ConfigurableTraitStubUnconfigured()
+            new Fake\ConfigurableTraitUnconfigured()
         );
     }
 
@@ -160,13 +160,13 @@ class ConfigurableTraitTest extends TestCase
      */
     public function testSetAndGetArray()
     {
-        $stub = new Stub\ConfigurableTraitStubConfigured();
+        $fake = new Fake\ConfigurableTraitConfigured();
         $config = [];
         foreach (array_keys($this->config) as $key) {
             $config[$key] = md5($key . ':' . microtime(true));
         }
-        $stub->setConfigs($config);
-        $this->assertSame($config, $stub->getConfigs());
+        $fake->setConfigs($config);
+        $this->assertSame($config, $fake->getConfigs());
     }
 
     /**
@@ -176,11 +176,11 @@ class ConfigurableTraitTest extends TestCase
      */
     public function testSetAndGetInteger()
     {
-        $stub = new Stub\ConfigurableTraitStubConfigured();
+        $fake = new Fake\ConfigurableTraitConfigured();
         foreach (array_keys($this->config) as $key) {
             $value = mt_rand();
-            $stub->setConfig($key, $value);
-            $this->assertSame($value, $stub->getConfig($key));
+            $fake->setConfig($key, $value);
+            $this->assertSame($value, $fake->getConfig($key));
         }
     }
 
@@ -191,13 +191,13 @@ class ConfigurableTraitTest extends TestCase
      */
     public function testSetAndGetObject()
     {
-        $stub = new Stub\ConfigurableTraitStubConfigured();
+        $fake = new Fake\ConfigurableTraitConfigured();
         foreach (array_keys($this->config) as $key) {
             $value = new \stdClass();
             $value->foo = md5($key . ':' . microtime(true));
             $value->bar = sha1($key . ':' . microtime(true));
-            $stub->setConfig($key, $value);
-            $this->assertSame($value, $stub->getConfig($key));
+            $fake->setConfig($key, $value);
+            $this->assertSame($value, $fake->getConfig($key));
         }
     }
 
@@ -208,11 +208,11 @@ class ConfigurableTraitTest extends TestCase
      */
     public function testSetAndGetString()
     {
-        $stub = new Stub\ConfigurableTraitStubConfigured();
+        $fake = new Fake\ConfigurableTraitConfigured();
         foreach (array_keys($this->config) as $key) {
             $value = md5($key . ':' . microtime(true));
-            $stub->setConfig($key, $value);
-            $this->assertSame($value, $stub->getConfig($key));
+            $fake->setConfig($key, $value);
+            $this->assertSame($value, $fake->getConfig($key));
         }
     }
 
@@ -224,7 +224,7 @@ class ConfigurableTraitTest extends TestCase
     public function testSetInvalidKey()
     {
         $this->expectException(\UnexpectedValueException::class);
-        (new Stub\ConfigurableTraitStubConfigured())->setConfig('badKey', 'badValue');
+        (new Fake\ConfigurableTraitConfigured())->setConfig('badKey', 'badValue');
     }
 
 }

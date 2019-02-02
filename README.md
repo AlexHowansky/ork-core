@@ -7,7 +7,7 @@
 Core bits of the Ork toolset.
 
 ## Requirements
-* PHP 7.1
+* PHP 7.2
 
 ## Installation
 
@@ -29,17 +29,17 @@ See the [wiki](https://github.com/AlexHowansky/ork-core/wiki).
 
 ## Development
 
-### Testing
-```bash
-$ composer test
-```
-
-### Generate API Documentation
-```bash
-$ composer doc
-```
-
-### Code Styling Validation
+### Code Style Validation
 ```bash
 $ composer phpcs
+```
+
+### Static Analysis
+```bash
+$ composer phpstan
+```
+
+### Unit Testing
+```bash
+$ composer test
 ```
