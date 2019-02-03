@@ -4,4 +4,4 @@
 
 ## Traits
 
-* [[ConfigurableTrait]]
+* [ConfigurableTrait](ConfigurableTrait.md)
