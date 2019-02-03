@@ -18,7 +18,6 @@
     "require-dev": {
         "mikey179/vfsStream": "^1.6.5",
         "ork/phpcs": "^2.0.7",
-        "pds/skeleton": "^1.0.0",
         "phpstan/phpstan": "^0.11.1",
         "phpunit/phpunit": "^8.0.0"
     },
@@ -35,7 +34,6 @@
     "scripts": {
         "phpcs": "phpcs",
         "phpstan": "phpstan analyze",
-        "skeleton": "pds-skeleton validate",
         "test": "phpunit"
     }
 }
