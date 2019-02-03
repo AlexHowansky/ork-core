@@ -5,7 +5,7 @@ Core bits of the Ork toolset.
 [![Latest Stable Version](https://img.shields.io/packagist/v/ork/core.svg?style=flat)](https://packagist.org/packages/ork/core)
 [![PHPStan Enabled](https://img.shields.io/badge/PHPStan-max-brightgreen.svg?style=flat)](https://github.com/phpstan/phpstan)
 [![PHP](https://img.shields.io/packagist/php-v/ork/core.svg?style=flat)](http://php.net)
-[![License](https://img.shields.io/github/license/AlexHowansky/ork-csv.svg?style=flat)](https://github.com/AlexHowansky/ork-core/blob/master/LICENSE)
+[![License](https://img.shields.io/github/license/AlexHowansky/ork-core.svg?style=flat)](https://github.com/AlexHowansky/ork-core/blob/master/LICENSE)
 [![Build Status](https://img.shields.io/travis/AlexHowansky/ork-core/master.svg?style=flat)](https://secure.travis-ci.org/AlexHowansky/ork-core)
 
 ## Requirements
