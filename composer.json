@@ -16,10 +16,10 @@
         "php": "^7.2"
     },
     "require-dev": {
-        "mikey179/vfsStream": "^1.6.5",
-        "ork/phpcs": "^2.0.8",
+        "mikey179/vfsstream": "^1.6.5",
+        "ork/phpcs": "^2.0.9",
         "phpstan/phpstan": "^0.11.1",
-        "phpunit/phpunit": "^8.0.1"
+        "phpunit/phpunit": "^8.0.2"
     },
     "autoload": {
         "psr-4": {
@@ -35,6 +35,6 @@
         "markdown": "markdownlint *.md docs",
         "phpcs": "phpcs",
         "phpstan": "phpstan analyze",
-        "test": "phpunit"
+        "test": "phpunit --testdox --colors=always --verbose"
     }
 }
