@@ -13,7 +13,7 @@ jobs:
     - name: composer validate
       run: composer validate
 
-    - name: composer isntall
+    - name: composer install
       run: composer install --prefer-dist --no-progress --no-suggest
 
     - name: PHPCS
