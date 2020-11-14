@@ -156,4 +156,6 @@ echo $foo->getConfig('foo');
 
 Output:
 
-    testing
+```text
+testing
+```
