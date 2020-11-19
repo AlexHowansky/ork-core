@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.2.0
+
+* Added support for PHP 8.0.
+
 ## 1.1.0
 
 * Removed support for PHP 7.2.
