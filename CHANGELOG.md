@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.2.1
+
+* Updated dependencies.
+* Changed test namespace.
+
 ## 1.2.0
 
 * Added support for PHP 8.0.
@@ -10,7 +15,7 @@
 
 ## 1.0.2
 
-* Updated dependecies.
+* Updated dependencies.
 * Added PHPStan validation.
 * Moved wiki docs into this repo.
 

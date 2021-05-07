@@ -3,13 +3,13 @@
 /**
  * Ork
  *
- * @package   OrkTest\Core
- * @copyright 2015-2020 Alex Howansky (https://github.com/AlexHowansky)
+ * @package   Ork\Core\Tests
+ * @copyright 2015-2021 Alex Howansky (https://github.com/AlexHowansky)
  * @license   https://github.com/AlexHowansky/ork-core/blob/master/LICENSE MIT License
  * @link      https://github.com/AlexHowansky/ork-core
  */
 
-namespace OrkTest\Core;
+namespace Ork\Core\Tests;
 
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;

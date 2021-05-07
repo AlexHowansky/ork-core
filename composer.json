@@ -17,9 +17,9 @@
     },
     "require-dev": {
         "mikey179/vfsstream": "^1.6.8",
-        "ork/phpcs": "^2.2.0",
-        "phpstan/phpstan": ">=0.12.69 <1.0.0",
-        "phpunit/phpunit": "^9.5.1",
+        "ork/phpcs": "^2.3.0",
+        "phpstan/phpstan": ">=0.12.85 <1.0.0",
+        "phpunit/phpunit": "^9.5.4",
         "roave/security-advisories": "dev-master"
     },
     "autoload": {
@@ -29,7 +29,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "OrkTest\\Core\\": "tests/"
+            "Ork\\Core\\Tests\\": "tests/"
         }
     },
     "scripts": {
@@ -37,6 +37,8 @@
         "markdown": "markdownlint *.md docs",
         "phpcs": "phpcs",
         "phpstan": "phpstan analyze",
+        "post-install-cmd": "phpcs --config-set php_version 70328",
+        "post-update-cmd": "phpcs --config-set php_version 70328",
         "test": "phpunit --no-coverage"
     }
 }
