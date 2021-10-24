@@ -7,13 +7,14 @@ Core bits of the Ork toolset.
 [![PHP](https://img.shields.io/packagist/php-v/ork/core.svg?style=flat)](http://php.net)
 [![License](https://img.shields.io/github/license/AlexHowansky/ork-core.svg?style=flat)](https://github.com/AlexHowansky/ork-core/blob/master/LICENSE)
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/AlexHowansky/ork-core/tests?style=flat&label=workflow)](https://github.com/AlexHowansky/ork-core/actions?query=workflow%3Atests)
-[![Travis Build Status](https://img.shields.io/travis/AlexHowansky/ork-core/master.svg?style=flat&label=Travis)](https://secure.travis-ci.org/AlexHowansky/ork-core)
+[![Travis Build Status](https://img.shields.io/travis/AlexHowansky/ork-core/master.svg?style=flat&label=Travis)](https://secure.travis-ci.com/AlexHowansky/ork-core)
 
 ## Requirements
 
 * PHP 7.3
 * PHP 7.4
 * PHP 8.0
+* PHP 8.1
 
 ## Installation
 
