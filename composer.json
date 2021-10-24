@@ -17,7 +17,7 @@
     },
     "require-dev": {
         "mikey179/vfsstream": "^1.6.10",
-        "ork/phpcs": "^2.5.2",
+        "ork/phpcs": "^2.6.0",
         "phpstan/phpstan": ">=0.12.99 <1.0.0",
         "phpunit/phpunit": "^9.5.10",
         "roave/security-advisories": "dev-master"
@@ -37,8 +37,8 @@
         "markdown": "markdownlint *.md docs",
         "phpcs": "phpcs",
         "phpstan": "phpstan analyze",
-        "post-install-cmd": "phpcs --config-set php_version 70328",
-        "post-update-cmd": "phpcs --config-set php_version 70328",
+        "post-install-cmd": "phpcs --config-set php_version 70331",
+        "post-update-cmd": "phpcs --config-set php_version 70331",
         "test": "phpunit --no-coverage"
     }
 }

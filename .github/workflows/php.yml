@@ -13,14 +13,17 @@ jobs:
     - name: composer validate
       run: composer validate
 
+    - name: composer check-platform-reqs
+      run: composer check-platform-reqs
+
     - name: composer install
       run: composer install --prefer-dist --no-progress --no-suggest
 
     - name: PHPCS
-      run: composer run-script phpcs
+      run: composer phpcs
 
     - name: PHPStan
-      run: composer run-script phpstan
+      run: composer phpstan
 
     - name: PHPUnit
-      run: composer run-script test
+      run: composer test
