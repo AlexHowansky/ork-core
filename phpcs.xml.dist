@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <ruleset name="Ork Core">
     <rule ref="Ork"/>
+    <config name="php_version" value="70332"/>
     <file>src</file>
 </ruleset>

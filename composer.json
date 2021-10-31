@@ -37,8 +37,6 @@
         "markdown": "markdownlint *.md docs",
         "phpcs": "phpcs",
         "phpstan": "phpstan analyze",
-        "post-install-cmd": "phpcs --config-set php_version 70331",
-        "post-update-cmd": "phpcs --config-set php_version 70331",
         "test": "phpunit --no-coverage"
     }
 }
