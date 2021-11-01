@@ -5,3 +5,7 @@
 ## Traits
 
 * [ConfigurableTrait](ConfigurableTrait.md)
+
+## String
+
+* [Base32](String/Base32.md)

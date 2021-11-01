@@ -31,8 +31,8 @@ trait ConfigurableTrait
     /**
      * Constructor.
      *
-     * @param Traversable|array|string $config The configuration names/values to set, or a file name that contains
-     *                                          them in JSON format.
+     * @param Traversable<string, mixed>|array<string, mixed>|string $config The configuration names/values to set, or
+     *        a file name that contains them in JSON format.
      *
      * @throws LogicException If a `$config` attribute has not been defined.
      */
@@ -40,6 +40,7 @@ trait ConfigurableTrait
     {
         if (
             property_exists($this, 'config') === false ||
+            // @phpstan-ignore-next-line
             is_array($this->config) === false
         ) {
             throw new LogicException(
@@ -65,9 +66,9 @@ trait ConfigurableTrait
      */
     protected function filterConfig(string $name, $value = null)
     {
-        $class = 'filterConfig' . ucfirst($name);
-        if (method_exists($this, $class) === true) {
-            $value = call_user_func([$this, $class], $value);
+        $filterMethod = 'filterConfig' . ucfirst($name);
+        if (method_exists($this, $filterMethod) === true) {
+            $value = $this->$filterMethod($value);
         }
         return $value;
     }
@@ -79,7 +80,7 @@ trait ConfigurableTrait
      *
      * @return mixed The value of the named configuration attribute.
      */
-    public function getConfig(string $name = null)
+    public function getConfig(string $name)
     {
         return $this->validateConfig($name)->config[$name];
     }
@@ -87,7 +88,7 @@ trait ConfigurableTrait
     /**
      * Get all configuration attributes.
      *
-     * @return array All configuration attributes.
+     * @return array<string, mixed> All configuration attributes.
      */
     public function getConfigs(): array
     {
@@ -108,7 +109,7 @@ trait ConfigurableTrait
         if (file_exists($file) === false) {
             throw new RuntimeException('No such config file.');
         }
-        $data = json_decode(file_get_contents($file), true);
+        $data = json_decode((string) file_get_contents($file), true);
         if ($data === null) {
             throw new RuntimeException('Invalid config file.');
         }
@@ -121,7 +122,7 @@ trait ConfigurableTrait
      * @param string $name  The name of the configuration attribute to set.
      * @param mixed  $value The value to set the configuration attribute to.
      *
-     * @return mixed Allow method chaining.
+     * @return self Allow method chaining.
      */
     public function setConfig(string $name, $value): self
     {
@@ -132,9 +133,9 @@ trait ConfigurableTrait
     /**
      * Set multiple configuration attributes.
      *
-     * @param Traversable|array $config The configuration attributes to set.
+     * @param Traversable<string, mixed>|array<string, mixed> $config The configuration attributes to set.
      *
-     * @return mixed Allow method chaining.
+     * @return self Allow method chaining.
      *
      * @throws InvalidArgumentException On error.
      */
@@ -151,7 +152,7 @@ trait ConfigurableTrait
      *
      * @param string $name The configuration attribute to validate.
      *
-     * @return mixed Allow method chaining.
+     * @return self Allow method chaining.
      *
      * @throws UnexpectedValueException If the named configuration attribute does not exist.
      */
