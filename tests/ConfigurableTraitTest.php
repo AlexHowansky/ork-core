@@ -11,8 +11,17 @@
 
 namespace Ork\Core\Tests;
 
+use ArrayIterator;
+use DomainException;
+use LogicException;
 use org\bovigo\vfs\vfsStream;
+use Ork\Core\Tests\Fake\ConfigurableTraitConfigured;
+use Ork\Core\Tests\Fake\ConfigurableTraitUnconfigured;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
+use stdClass;
+use TypeError;
+use UnexpectedValueException;
 
 class ConfigurableTraitTest extends TestCase
 {
@@ -37,7 +46,7 @@ class ConfigurableTraitTest extends TestCase
     {
         $this->assertSame(
             $this->config,
-            (new Fake\ConfigurableTraitConfigured($this->config))->getConfigs()
+            (new ConfigurableTraitConfigured($this->config))->getConfigs()
         );
     }
 
@@ -48,10 +57,10 @@ class ConfigurableTraitTest extends TestCase
      */
     public function testConstructorBadFile()
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $file = vfsStream::setup()->url() . '/config.json';
         file_put_contents($file, 'fail');
-        new Fake\ConfigurableTraitConfigured($file);
+        new ConfigurableTraitConfigured($file);
     }
 
     /**
@@ -65,7 +74,7 @@ class ConfigurableTraitTest extends TestCase
         file_put_contents($file, json_encode($this->config));
         $this->assertSame(
             $this->config,
-            (new Fake\ConfigurableTraitConfigured($file))->getConfigs()
+            (new ConfigurableTraitConfigured($file))->getConfigs()
         );
     }
 
@@ -76,8 +85,8 @@ class ConfigurableTraitTest extends TestCase
      */
     public function testConstructorInteger()
     {
-        $this->expectException(\TypeError::class);
-        new Fake\ConfigurableTraitConfigured(1);
+        $this->expectException(TypeError::class);
+        new ConfigurableTraitConfigured(1);
     }
 
     /**
@@ -89,7 +98,7 @@ class ConfigurableTraitTest extends TestCase
     {
         $this->assertSame(
             $this->config,
-            (new Fake\ConfigurableTraitConfigured(new \ArrayIterator($this->config)))->getConfigs()
+            (new ConfigurableTraitConfigured(new ArrayIterator($this->config)))->getConfigs()
         );
     }
 
@@ -100,8 +109,8 @@ class ConfigurableTraitTest extends TestCase
      */
     public function testConstructorNoFile()
     {
-        $this->expectException(\RuntimeException::class);
-        new Fake\ConfigurableTraitConfigured(vfsStream::setup()->url() . '/path/to/bad/file');
+        $this->expectException(RuntimeException::class);
+        new ConfigurableTraitConfigured(vfsStream::setup()->url() . '/path/to/bad/file');
     }
 
     /**
@@ -111,8 +120,8 @@ class ConfigurableTraitTest extends TestCase
      */
     public function testConstructorNotIterable()
     {
-        $this->expectException(\TypeError::class);
-        new Fake\ConfigurableTraitConfigured(new \stdClass());
+        $this->expectException(TypeError::class);
+        new ConfigurableTraitConfigured(new stdClass());
     }
 
     /**
@@ -122,8 +131,8 @@ class ConfigurableTraitTest extends TestCase
      */
     public function testFilterException()
     {
-        $this->expectException(\DomainException::class);
-        (new Fake\ConfigurableTraitConfigured())->setConfig('key3', 'this is a bad value');
+        $this->expectException(DomainException::class);
+        (new ConfigurableTraitConfigured())->setConfig('key3', 'this is a bad value');
     }
 
     /**
@@ -133,7 +142,7 @@ class ConfigurableTraitTest extends TestCase
      */
     public function testGetDefaultValue()
     {
-        $fake = new Fake\ConfigurableTraitConfigured();
+        $fake = new ConfigurableTraitConfigured();
         $this->assertSame('default1', $fake->getConfig('key1'));
         $this->assertSame(12345, $fake->getConfig('key2'));
         $this->assertNull($fake->getConfig('key3'));
@@ -146,10 +155,10 @@ class ConfigurableTraitTest extends TestCase
      */
     public function testNoConfigDefined()
     {
-        $this->expectException(\LogicException::class);
+        $this->expectException(LogicException::class);
         $this->assertObjectNotHasAttribute(
             'config',
-            new Fake\ConfigurableTraitUnconfigured()
+            new ConfigurableTraitUnconfigured()
         );
     }
 
@@ -160,7 +169,7 @@ class ConfigurableTraitTest extends TestCase
      */
     public function testSetAndGetArray()
     {
-        $fake = new Fake\ConfigurableTraitConfigured();
+        $fake = new ConfigurableTraitConfigured();
         $config = [];
         foreach (array_keys($this->config) as $key) {
             $config[$key] = md5($key . ':' . microtime(true));
@@ -176,7 +185,7 @@ class ConfigurableTraitTest extends TestCase
      */
     public function testSetAndGetInteger()
     {
-        $fake = new Fake\ConfigurableTraitConfigured();
+        $fake = new ConfigurableTraitConfigured();
         foreach (array_keys($this->config) as $key) {
             $value = mt_rand();
             $fake->setConfig($key, $value);
@@ -191,9 +200,9 @@ class ConfigurableTraitTest extends TestCase
      */
     public function testSetAndGetObject()
     {
-        $fake = new Fake\ConfigurableTraitConfigured();
+        $fake = new ConfigurableTraitConfigured();
         foreach (array_keys($this->config) as $key) {
-            $value = new \stdClass();
+            $value = new stdClass();
             $value->foo = md5($key . ':' . microtime(true));
             $value->bar = sha1($key . ':' . microtime(true));
             $fake->setConfig($key, $value);
@@ -208,7 +217,7 @@ class ConfigurableTraitTest extends TestCase
      */
     public function testSetAndGetString()
     {
-        $fake = new Fake\ConfigurableTraitConfigured();
+        $fake = new ConfigurableTraitConfigured();
         foreach (array_keys($this->config) as $key) {
             $value = md5($key . ':' . microtime(true));
             $fake->setConfig($key, $value);
@@ -223,8 +232,8 @@ class ConfigurableTraitTest extends TestCase
      */
     public function testSetInvalidKey()
     {
-        $this->expectException(\UnexpectedValueException::class);
-        (new Fake\ConfigurableTraitConfigured())->setConfig('badKey', 'badValue');
+        $this->expectException(UnexpectedValueException::class);
+        (new ConfigurableTraitConfigured())->setConfig('badKey', 'badValue');
     }
 
 }

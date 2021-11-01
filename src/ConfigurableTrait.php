@@ -11,6 +11,12 @@
 
 namespace Ork\Core;
 
+use InvalidArgumentException;
+use LogicException;
+use RuntimeException;
+use Traversable;
+use UnexpectedValueException;
+
 /**
  * Defines a trait for consistent configuration of object features.
  */
@@ -25,10 +31,10 @@ trait ConfigurableTrait
     /**
      * Constructor.
      *
-     * @param \Traversable|array|string $config The configuration names/values to set, or a file name that contains
+     * @param Traversable|array|string $config The configuration names/values to set, or a file name that contains
      *                                          them in JSON format.
      *
-     * @throws \LogicException If a `$config` attribute has not been defined.
+     * @throws LogicException If a `$config` attribute has not been defined.
      */
     public function __construct($config = null)
     {
@@ -36,7 +42,7 @@ trait ConfigurableTrait
             property_exists($this, 'config') === false ||
             is_array($this->config) === false
         ) {
-            throw new \LogicException(
+            throw new LogicException(
                 'Class definition for ' . get_class($this) . ' must include a protected array attribute named config.'
             );
         }
@@ -95,16 +101,16 @@ trait ConfigurableTrait
      *
      * @return self Allow method chaining.
      *
-     * @throws \RuntimeException On error.
+     * @throws RuntimeException On error.
      */
     public function loadConfig(string $file): self
     {
         if (file_exists($file) === false) {
-            throw new \RuntimeException('No such config file.');
+            throw new RuntimeException('No such config file.');
         }
         $data = json_decode(file_get_contents($file), true);
         if ($data === null) {
-            throw new \RuntimeException('Invalid config file.');
+            throw new RuntimeException('Invalid config file.');
         }
         return $this->setConfigs($data);
     }
@@ -126,11 +132,11 @@ trait ConfigurableTrait
     /**
      * Set multiple configuration attributes.
      *
-     * @param \Traversable|array $config The configuration attributes to set.
+     * @param Traversable|array $config The configuration attributes to set.
      *
      * @return mixed Allow method chaining.
      *
-     * @throws \InvalidArgumentException On error.
+     * @throws InvalidArgumentException On error.
      */
     public function setConfigs(iterable $config): self
     {
@@ -147,12 +153,12 @@ trait ConfigurableTrait
      *
      * @return mixed Allow method chaining.
      *
-     * @throws \UnexpectedValueException If the named configuration attribute does not exist.
+     * @throws UnexpectedValueException If the named configuration attribute does not exist.
      */
     protected function validateConfig(string $name): self
     {
         if (array_key_exists($name, $this->config) === false) {
-            throw new \UnexpectedValueException('No such configuration attribute: ' . $name);
+            throw new UnexpectedValueException('No such configuration attribute: ' . $name);
         }
         return $this;
     }
