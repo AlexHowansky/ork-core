@@ -11,6 +11,9 @@
 
 namespace Ork\Core\Tests\Fake;
 
+/**
+ * Class fake for an unconfigured used of the trait.
+ */
 class ConfigurableTraitUnconfigured
 {
 

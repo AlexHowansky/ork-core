@@ -23,6 +23,9 @@ use stdClass;
 use TypeError;
 use UnexpectedValueException;
 
+/**
+ * Test ConfigurableTrait.
+ */
 class ConfigurableTraitTest extends TestCase
 {
 

@@ -37,7 +37,8 @@ class Foo
 
 ## Setting at object's configuration
 
-Objects which implement the trait may be configured in any of the following manners:
+Objects which implement the trait may be configured in any of the following
+manners:
 
 ### Implicitly via constructor with array
 
@@ -123,8 +124,8 @@ public function bar()
 
 ## Setter filtering
 
-You may optionally create methods to pre-process values before they are set. This
-is accomplished by creating a method named `filterConfig*` where `*` is the
+You may optionally create methods to pre-process values before they are set.
+This is accomplished by creating a method named `filterConfig*` where `*` is the
 camel-cased name of the configuration attribute. This method should take one
 argument (the value to filter) and return one value (the filtered value.) If the
 filter method decides to reject a value, it should throw a DomainException. For
