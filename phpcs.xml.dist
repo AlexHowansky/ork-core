@@ -2,6 +2,7 @@
 <ruleset name="Ork Core">
     <rule ref="Ork"/>
     <rule ref="PHPCompatibility"/>
+    <config name="php_version" value="70332"/>
     <config name="testVersion" value="7.3-"/>
     <file>src</file>
     <file>tests</file>
