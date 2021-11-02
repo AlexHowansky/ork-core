@@ -19,6 +19,7 @@
         "mikey179/vfsstream": "^1.6.10",
         "ork/phpcs": "^2.6.0",
         "phpcompatibility/php-compatibility": "^9.3",
+        "phpmetrics/phpmetrics": "^2.7",
         "phpstan/phpstan": ">=0.12.99 <1.0.0",
         "phpunit/phpunit": "^9.5.10",
         "roave/security-advisories": "dev-master"
@@ -36,6 +37,7 @@
     "scripts": {
         "coverage": "XDEBUG_MODE=coverage phpunit",
         "markdown": "markdownlint *.md docs",
+        "metrics": "phpmetrics --config=phpmetrics.json",
         "phpcs": "phpcs",
         "phpstan": "phpstan analyze",
         "test": "phpunit --no-coverage"
