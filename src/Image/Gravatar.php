@@ -28,7 +28,7 @@ class Gravatar
     protected const ERROR_TOO_SMALL = 'Size must be between 1 and 512.';
 
     /**
-     * Configurable trait settings.
+     * Configurable trait parameters.
      *
      * @var array<string, mixed>
      */
