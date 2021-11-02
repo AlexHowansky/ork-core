@@ -22,10 +22,13 @@ which contains (as keys) the names of the configuration values and optionally
 (as values) a default value. For example:
 
 ```php
+
+use \Ork\Core\ConfigurableTrait;
+
 class Foo
 {
 
-    use \Ork\Core\ConfigurableTrait;
+    use ConfigurableTrait;
 
     protected $config = [
         'foo' => null,
@@ -47,7 +50,7 @@ $config = [
     'foo' => 'thing',
     'bar' => 'some other thing',
 ];
-$foo = new \Foo($config);
+$foo = new Foo($config);
 ```
 
 ### Implicitly via constructor with JSON file
@@ -60,13 +63,13 @@ $foo = new \Foo($config);
 ```
 
 ```php
-$foo = new \Foo('/path/to/config.json');
+$foo = new Foo('/path/to/config.json');
 ```
 
 ### Explicitly with single element
 
 ```php
-$foo = new \Foo();
+$foo = new Foo();
 $foo->setConfig('foo', 'thing');
 $foo->setConfig('bar', 'some other thing');
 ```
@@ -78,7 +81,7 @@ $config = [
     'foo' => 'thing',
     'bar' => 'some other thing',
 ];
-$foo = new \Foo();
+$foo = new Foo();
 $foo->setConfigs($config);
 ```
 
@@ -92,7 +95,7 @@ $foo->loadConfig('/path/to/config.json');
 Note all setters utilize a fluent interface, so calls can be stacked:
 
 ```php
-$foo = new \Foo();
+$foo = new Foo();
 $foo
     ->setConfigs([...])
     ->loadConfig('/path/to/config.json')
@@ -134,10 +137,12 @@ example, if the object has a method named filterConfigFoo(), then a call to
 returned by `$obj->filterConfigFoo($value)`.
 
 ```php
+use \Ork\Core\ConfigurableTrait;
+
 class Foo
 {
 
-    use \Ork\Core\ConfigurableTrait;
+    use ConfigurableTrait;
 
     protected $config = [
         'foo' => null,
@@ -149,8 +154,10 @@ class Foo
     }
 
 }
+```
 
-$foo = new \Foo();
+```php
+$foo = new Foo();
 $foo->setConfig('foo', '   TESTING   ');
 echo $foo->getConfig('foo');
 ```

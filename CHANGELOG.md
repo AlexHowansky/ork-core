@@ -2,6 +2,8 @@
 
 ## 1.3.0
 
+* Added Filter\State\AbbreviationToName class.
+* Added Filter\State\NameToAbbreviation class.
 * Added String\Base32 class.
 * Added String\Template class.
 * Updated dependencies.

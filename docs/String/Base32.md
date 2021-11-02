@@ -32,7 +32,6 @@ By default, the alphabet defined in
 alternative alphabet may be provided via the `alphabet` parameter.
 
 ```php
-$base32 = new Base32();
-$base32->setConfig('alphabet', '0123456789abcdefghijklmnopqrstuv');
+$base32 = new Base32(['alphabet' => '0123456789abcdefghijklmnopqrstuv']);
 $encoded = $base32->encode($plaintext);
 ```
