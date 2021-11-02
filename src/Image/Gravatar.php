@@ -12,6 +12,7 @@
 namespace Ork\Core\Image;
 
 use DomainException;
+use Exception;
 use Ork\Core\ConfigurableTrait;
 use RuntimeException;
 
@@ -53,7 +54,7 @@ class Gravatar
     {
         try {
             return $this->getUri();
-        } catch (RuntimeException $e) {
+        } catch (Exception $e) {
             return '';
         }
     }
