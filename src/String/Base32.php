@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Ork
+ * Ork Core
  *
  * @package   Ork\Core
  * @copyright 2015-2021 Alex Howansky (https://github.com/AlexHowansky)
@@ -27,7 +27,7 @@ class Base32
     protected const ERROR_INVALID_INPUT = 'Invalid input.';
 
     /**
-     * Configurable trait settings.
+     * Configurable trait parameters.
      *
      * @var array<string, mixed>
      */

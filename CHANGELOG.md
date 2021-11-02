@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.3.0
+
+* Added String\Base32 class.
+* Added String\Template class.
+* Updated dependencies.
+
 ## 1.2.1
 
 * Updated dependencies.
