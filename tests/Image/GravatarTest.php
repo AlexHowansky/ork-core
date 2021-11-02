@@ -25,7 +25,7 @@ class GravatarTest extends TestCase
     /**
      * Verify that the size parameter is not too large.
      */
-    public function testBadSizeLarge()
+    public function testBadSizeLarge(): void
     {
         $this->expectException(DomainException::class);
         $this->expectExceptionMessage('Size must be between 1 and 512.');
@@ -35,7 +35,7 @@ class GravatarTest extends TestCase
     /**
      * Verify that the size parameter is not too small.
      */
-    public function testBadSizeSmall()
+    public function testBadSizeSmall(): void
     {
         $this->expectException(DomainException::class);
         $this->expectExceptionMessage('Size must be between 1 and 512.');
@@ -45,7 +45,7 @@ class GravatarTest extends TestCase
     /**
      * Verify that we get an error if we don't provide an email.
      */
-    public function testNoEmail()
+    public function testNoEmail(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('No email specified.');
@@ -53,17 +53,19 @@ class GravatarTest extends TestCase
     }
 
     /**
-     * Verify that casting to a string doesn't throw an exception.
+     * Verify that casting to a string throws an exception.
      */
-    public function testToStringException()
+    public function testToStringException(): void
     {
-        $this->assertSame('', (string) new Gravatar());
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('No email specified.');
+        (string) new Gravatar();
     }
 
     /**
      * Verify that we've built the URI correctly.
      */
-    public function testUri()
+    public function testUri(): void
     {
         $gravatar = new Gravatar([
             'email' => 'foo@bar.com',

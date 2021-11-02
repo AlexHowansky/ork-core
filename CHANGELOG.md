@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.4.0
+
+* Removed support for PHP 7.3.
+
 ## 1.3.0
 
 * Added Filter\State\AbbreviationToName class.

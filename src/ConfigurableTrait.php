@@ -24,8 +24,12 @@ trait ConfigurableTrait
 {
 
     /**
-     * We can't declare an empty/default $config here because the PHP trait
-     * implementation requires that all definitions match exactly.
+     * The configuration parameters.
+     *
+     * We can't actually declare an empty/default $config here because the PHP
+     * trait implementation requires that all definitions match exactly.
+     *
+     * @var array<string, mixed> $config
      */
 
     /**
@@ -82,6 +86,7 @@ trait ConfigurableTrait
      */
     public function getConfig(string $name)
     {
+        // @phpstan-ignore-next-line
         return $this->validateConfig($name)->config[$name];
     }
 
@@ -92,6 +97,7 @@ trait ConfigurableTrait
      */
     public function getConfigs(): array
     {
+        // @phpstan-ignore-next-line
         return $this->config;
     }
 
@@ -126,6 +132,7 @@ trait ConfigurableTrait
      */
     public function setConfig(string $name, $value): self
     {
+        // @phpstan-ignore-next-line
         $this->validateConfig($name)->config[$name] = $this->filterConfig($name, $value);
         return $this;
     }
@@ -158,6 +165,7 @@ trait ConfigurableTrait
      */
     protected function validateConfig(string $name): self
     {
+        // @phpstan-ignore-next-line
         if (array_key_exists($name, $this->config) === false) {
             throw new UnexpectedValueException('No such configuration attribute: ' . $name);
         }

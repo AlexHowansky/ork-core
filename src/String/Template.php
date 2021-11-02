@@ -26,7 +26,7 @@ class Template
      *
      * @var array<string, mixed>
      */
-    protected $config = [
+    protected array $config = [
 
         // The ending tag delimiter.
         'delimiterEnd' => '}}',
@@ -46,13 +46,11 @@ class Template
      *
      * @return string
      */
-    public function render(array $params)
+    public function render(array $params): string
     {
         return str_replace(
             array_map(
-                function ($key) {
-                    return $this->getConfig('delimiterStart') . $key . $this->getConfig('delimiterEnd');
-                },
+                fn($key) => $this->getConfig('delimiterStart') . $key . $this->getConfig('delimiterEnd'),
                 array_keys($params)
             ),
             array_values($params),

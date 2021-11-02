@@ -23,8 +23,10 @@ class Base32Test extends TestCase
 
     /**
      * Provider for testBadAlphabet() method.
+     *
+     * @return array<array>
      */
-    public function badAlphabetProvider()
+    public function badAlphabetProvider(): array
     {
         return [
 
@@ -48,8 +50,10 @@ class Base32Test extends TestCase
 
     /**
      * Provider for testCustomAlphabet() method.
+     *
+     * @return array<array>
      */
-    public function customAlphabetProvider()
+    public function customAlphabetProvider(): array
     {
         return [
             ['0123456789~!@#$%^&*()-+=[]{};:<>'],
@@ -60,8 +64,10 @@ class Base32Test extends TestCase
 
     /**
      * Provider for testEncodeDecode() method.
+     *
+     * @return array<array>
      */
-    public function encodeDecodeProvider()
+    public function encodeDecodeProvider(): array
     {
         return [
             [
@@ -84,7 +90,7 @@ class Base32Test extends TestCase
      *
      * @dataProvider badAlphabetProvider
      */
-    public function testBadAlphabet(string $alphabet)
+    public function testBadAlphabet(string $alphabet): void
     {
         $this->expectException(DomainException::class);
         $this->expectExceptionMessage('Alphabet must have 32 unique case-insensitive characters.');
@@ -96,7 +102,7 @@ class Base32Test extends TestCase
      *
      * @dataProvider customAlphabetProvider
      */
-    public function testCustomAlphabet(string $alphabet)
+    public function testCustomAlphabet(string $alphabet): void
     {
         $input = base64_encode(random_bytes(512));
         $b32 = (new Base32())->setConfig('alphabet', $alphabet);
@@ -115,7 +121,7 @@ class Base32Test extends TestCase
      *
      * @dataProvider encodeDecodeProvider
      */
-    public function testEncodeDecode(string $input, string $expected)
+    public function testEncodeDecode(string $input, string $expected): void
     {
         $b32 = new Base32();
         $encoded = $b32->encode($input);
@@ -129,7 +135,7 @@ class Base32Test extends TestCase
      * Verify that an input containing characters not in the alphabet throws
      * the expected exception.
      */
-    public function testInvalidCharacter()
+    public function testInvalidCharacter(): void
     {
         $this->expectException(DomainException::class);
         $this->expectExceptionMessage('Invalid character in input.');
@@ -139,7 +145,7 @@ class Base32Test extends TestCase
     /**
      * Verify that an input of invalid length throws the expected exception.
      */
-    public function testInvalidLength()
+    public function testInvalidLength(): void
     {
         $this->expectException(DomainException::class);
         $this->expectExceptionMessage('Invalid input.');
@@ -149,7 +155,7 @@ class Base32Test extends TestCase
     /**
      * Verify that input with invalid padding throws the expected exception.
      */
-    public function testInvalidPadding()
+    public function testInvalidPadding(): void
     {
         $this->expectException(DomainException::class);
         $this->expectExceptionMessage('Invalid input.');

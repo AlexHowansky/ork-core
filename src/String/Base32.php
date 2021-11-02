@@ -31,7 +31,7 @@ class Base32
      *
      * @var array<string, mixed>
      */
-    protected $config = [
+    protected array $config = [
 
         // The characters to use for encoding. Defaults to RFC4648.
         'alphabet' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567',
@@ -47,7 +47,7 @@ class Base32
      *
      * @throws DomainException On invalid input.
      */
-    public function decode(string $data)
+    public function decode(string $data): string
     {
 
         // Make sure we have a valid data string.
@@ -87,7 +87,7 @@ class Base32
      *
      * @return string The BASE32 encoded string.
      */
-    public function encode(string $data)
+    public function encode(string $data): string
     {
 
         // Convert the data to a binary string.
@@ -122,7 +122,7 @@ class Base32
      *
      * @throws DomainException On invalid input.
      */
-    protected function filterConfigAlphabet(string $alphabet)
+    protected function filterConfigAlphabet(string $alphabet): string
     {
         if (count(array_unique(str_split(strtoupper($alphabet)))) !== 32) {
             throw new DomainException(self::ERROR_INVALID_ALPHABET);

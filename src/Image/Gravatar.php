@@ -12,7 +12,6 @@
 namespace Ork\Core\Image;
 
 use DomainException;
-use Exception;
 use Ork\Core\ConfigurableTrait;
 use RuntimeException;
 
@@ -24,15 +23,15 @@ class Gravatar
 
     use ConfigurableTrait;
 
+    protected const ERROR_BAD_SIZE = 'Size must be between 1 and 512.';
     protected const ERROR_NO_EMAIL = 'No email specified.';
-    protected const ERROR_TOO_SMALL = 'Size must be between 1 and 512.';
 
     /**
      * Configurable trait parameters.
      *
      * @var array<string, mixed>
      */
-    protected $config = [
+    protected array $config = [
 
         // The default image URI to use if none is available for the requested email.
         'defaultUri' => null,
@@ -50,13 +49,9 @@ class Gravatar
      *
      * @return string The gravatar URI.
      */
-    public function __toString()
+    public function __toString(): string
     {
-        try {
-            return $this->getUri();
-        } catch (Exception $e) {
-            return '';
-        }
+        return $this->getUri();
     }
 
     /**
@@ -68,22 +63,22 @@ class Gravatar
      *
      * @throws DomainException If the provided value is not in the acceptable range.
      */
-    protected function filterConfigSize(int $size)
+    protected function filterConfigSize(int $size): int
     {
         if ($size < 1 || $size > 512) {
-            throw new DomainException(self::ERROR_TOO_SMALL);
+            throw new DomainException(self::ERROR_BAD_SIZE);
         }
         return $size;
     }
 
     /**
-     * Get the gravatar URI.
+     * Get the Gravatar URI.
      *
-     * @return string The gravatar URI.
+     * @return string The Gravatar URI.
      *
      * @throws RuntimeException If no email has been provided.
      */
-    public function getUri()
+    public function getUri(): string
     {
         if (empty($this->getConfig('email')) === true) {
             throw new RuntimeException(self::ERROR_NO_EMAIL);

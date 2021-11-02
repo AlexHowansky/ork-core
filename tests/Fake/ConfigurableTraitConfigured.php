@@ -22,11 +22,11 @@ class ConfigurableTraitConfigured
     use \Ork\Core\ConfigurableTrait;
 
     /**
-     * Configurable parameters.
+     * Configurable trait parameters.
      *
-     * @var array $config
+     * @var array<string, mixed> $config
      */
-    protected $config = [
+    protected array $config = [
         'key1' => 'default1',
         'key2' => 12345,
         'key3' => null,
@@ -36,6 +36,8 @@ class ConfigurableTraitConfigured
      * Filter handler for the `key3` parameter.
      *
      * @param mixed $value The value to filter.
+     *
+     * @return mixed
      *
      * @throws DomainException On invalid value.
      */

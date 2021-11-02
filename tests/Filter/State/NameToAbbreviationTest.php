@@ -24,58 +24,53 @@ class NameToAbbreviationTest extends TestCase
     /**
      * Verify that bad values throw an exception when requested.
      */
-    public function testBadWithException()
+    public function testBadWithException(): void
     {
         $this->expectException(UnexpectedValueException::class);
-        $filter = new NameToAbbreviation();
-        $filter->filter('foo');
+        $this->expectExceptionMessage('Input value can not be converted to an abbreviation.');
+        (new NameToAbbreviation())->filter('foo');
     }
 
     /**
      * Verify that bad values don't throw an exception when requested.
      */
-    public function testBadWithoutException()
+    public function testBadWithoutException(): void
     {
-        $filter = new NameToAbbreviation(['abortOnInvalidInput' => false]);
-        $this->assertEquals('foo', $filter->filter('foo'));
+        $this->assertEquals('foo', (new NameToAbbreviation(['abortOnInvalidInput' => false]))->filter('foo'));
     }
 
     /**
      * Verify default settings.
      */
-    public function testDefaultConfig()
+    public function testDefaultConfig(): void
     {
-        $this->expectException(UnexpectedValueException::class);
         $filter = new NameToAbbreviation();
         $this->assertEquals(false, $filter->getConfig('includeTerritories'));
-        $filter->filter('Puerto Rico');
+        $this->assertEquals(true, $filter->getConfig('abortOnInvalidInput'));
     }
 
     /**
      * Verify that good conversions work as expected.
      */
-    public function testGood()
+    public function testGood(): void
     {
-        $filter = new NameToAbbreviation();
-        $this->assertEquals('NY', $filter->filter('new york'));
+        $this->assertEquals('NY', (new NameToAbbreviation())->filter('new york'));
     }
 
     /**
      * Verify that territories work correctly.
      */
-    public function testTerritory()
+    public function testTerritory(): void
     {
-        $filter = new NameToAbbreviation(['includeTerritories' => true]);
-        $this->assertEquals('PR', $filter->filter('Puerto Rico'));
+        $this->assertEquals('PR', (new NameToAbbreviation(['includeTerritories' => true]))->filter('Puerto Rico'));
     }
 
     /**
      * Verify that values get trimmed properly.
      */
-    public function testTrim()
+    public function testTrim(): void
     {
-        $filter = new NameToAbbreviation();
-        $this->assertEquals('NY', $filter->filter(' new  york   '));
+        $this->assertEquals('NY', (new NameToAbbreviation())->filter(' new  york   '));
     }
 
 }

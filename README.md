@@ -10,7 +10,6 @@ Core bits of the Ork toolset.
 
 ## Requirements
 
-* PHP 7.3
 * PHP 7.4
 * PHP 8.0
 * PHP 8.1

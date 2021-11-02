@@ -22,8 +22,10 @@ class TemplateTest extends TestCase
 
     /**
      * Provider for testCustomDelimiters() method.
+     *
+     * @return array<array>
      */
-    public function providerForCustomDelimiters()
+    public function providerForCustomDelimiters(): array
     {
         return [
             [
@@ -70,8 +72,10 @@ class TemplateTest extends TestCase
 
     /**
      * Provider for testRender() method.
+     *
+     * @return array<array>
      */
-    public function providerForRender()
+    public function providerForRender(): array
     {
         return [
 
@@ -102,9 +106,13 @@ class TemplateTest extends TestCase
     /**
      * Verify that custom delimiters work as expected.
      *
+     * @param array<string, mixed> $config The template config.
+     * @param array<string, mixed> $params The values to replace.
+     * @param string $expect The output to expect.
+     *
      * @dataProvider providerForCustomDelimiters
      */
-    public function testCustomDelimiters(array $config, array $params, string $expect)
+    public function testCustomDelimiters(array $config, array $params, string $expect): void
     {
         $this->assertSame($expect, (new Template($config))->render($params));
     }
@@ -112,9 +120,13 @@ class TemplateTest extends TestCase
     /**
      * Verify that basic rendering works as expected.
      *
+     * @param string $template The template to render.
+     * @param array<string, mixed> $params The values to replace.
+     * @param string $expect The output to expect.
+     *
      * @dataProvider providerForRender
      */
-    public function testRender(string $template, array $params, string $expect)
+    public function testRender(string $template, array $params, string $expect): void
     {
         $this->assertSame($expect, (new Template(['template' => $template]))->render($params));
     }

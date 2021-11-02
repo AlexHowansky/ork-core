@@ -32,9 +32,9 @@ class ConfigurableTraitTest extends TestCase
     /**
      * Test values.
      *
-     * @var array
+     * @var array<string, mixed>
      */
-    protected $config = [
+    protected array $config = [
         'key1' => 'value1',
         'key2' => 12345,
         'key3' => null,
@@ -45,7 +45,7 @@ class ConfigurableTraitTest extends TestCase
      *
      * @return void
      */
-    public function testConstructorArray()
+    public function testConstructorArray(): void
     {
         $this->assertSame(
             $this->config,
@@ -58,7 +58,7 @@ class ConfigurableTraitTest extends TestCase
      *
      * @return void
      */
-    public function testConstructorBadFile()
+    public function testConstructorBadFile(): void
     {
         $this->expectException(RuntimeException::class);
         $file = vfsStream::setup()->url() . '/config.json';
@@ -71,7 +71,7 @@ class ConfigurableTraitTest extends TestCase
      *
      * @return void
      */
-    public function testConstructorFile()
+    public function testConstructorFile(): void
     {
         $file = vfsStream::setup()->url() . '/config.json';
         file_put_contents($file, json_encode($this->config));
@@ -86,9 +86,10 @@ class ConfigurableTraitTest extends TestCase
      *
      * @return void
      */
-    public function testConstructorInteger()
+    public function testConstructorInteger(): void
     {
         $this->expectException(TypeError::class);
+        // @phpstan-ignore-next-line
         new ConfigurableTraitConfigured(1);
     }
 
@@ -97,7 +98,7 @@ class ConfigurableTraitTest extends TestCase
      *
      * @return void
      */
-    public function testConstructorIterable()
+    public function testConstructorIterable(): void
     {
         $this->assertSame(
             $this->config,
@@ -110,7 +111,7 @@ class ConfigurableTraitTest extends TestCase
      *
      * @return void
      */
-    public function testConstructorNoFile()
+    public function testConstructorNoFile(): void
     {
         $this->expectException(RuntimeException::class);
         new ConfigurableTraitConfigured(vfsStream::setup()->url() . '/path/to/bad/file');
@@ -121,9 +122,10 @@ class ConfigurableTraitTest extends TestCase
      *
      * @return void
      */
-    public function testConstructorNotIterable()
+    public function testConstructorNotIterable(): void
     {
         $this->expectException(TypeError::class);
+        // @phpstan-ignore-next-line
         new ConfigurableTraitConfigured(new stdClass());
     }
 
@@ -132,7 +134,7 @@ class ConfigurableTraitTest extends TestCase
      *
      * @return void
      */
-    public function testFilterException()
+    public function testFilterException(): void
     {
         $this->expectException(DomainException::class);
         (new ConfigurableTraitConfigured())->setConfig('key3', 'this is a bad value');
@@ -143,7 +145,7 @@ class ConfigurableTraitTest extends TestCase
      *
      * @return void
      */
-    public function testGetDefaultValue()
+    public function testGetDefaultValue(): void
     {
         $fake = new ConfigurableTraitConfigured();
         $this->assertSame('default1', $fake->getConfig('key1'));
@@ -156,7 +158,7 @@ class ConfigurableTraitTest extends TestCase
      *
      * @return void
      */
-    public function testNoConfigDefined()
+    public function testNoConfigDefined(): void
     {
         $this->expectException(LogicException::class);
         $this->assertObjectNotHasAttribute(
@@ -170,7 +172,7 @@ class ConfigurableTraitTest extends TestCase
      *
      * @return void
      */
-    public function testSetAndGetArray()
+    public function testSetAndGetArray(): void
     {
         $fake = new ConfigurableTraitConfigured();
         $config = [];
@@ -186,7 +188,7 @@ class ConfigurableTraitTest extends TestCase
      *
      * @return void
      */
-    public function testSetAndGetInteger()
+    public function testSetAndGetInteger(): void
     {
         $fake = new ConfigurableTraitConfigured();
         foreach (array_keys($this->config) as $key) {
@@ -201,7 +203,7 @@ class ConfigurableTraitTest extends TestCase
      *
      * @return void
      */
-    public function testSetAndGetObject()
+    public function testSetAndGetObject(): void
     {
         $fake = new ConfigurableTraitConfigured();
         foreach (array_keys($this->config) as $key) {
@@ -218,7 +220,7 @@ class ConfigurableTraitTest extends TestCase
      *
      * @return void
      */
-    public function testSetAndGetString()
+    public function testSetAndGetString(): void
     {
         $fake = new ConfigurableTraitConfigured();
         foreach (array_keys($this->config) as $key) {
@@ -233,7 +235,7 @@ class ConfigurableTraitTest extends TestCase
      *
      * @return void
      */
-    public function testSetInvalidKey()
+    public function testSetInvalidKey(): void
     {
         $this->expectException(UnexpectedValueException::class);
         (new ConfigurableTraitConfigured())->setConfig('badKey', 'badValue');

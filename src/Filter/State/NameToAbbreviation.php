@@ -12,28 +12,29 @@
 namespace Ork\Core\Filter\State;
 
 use Ork\Core\ConfigurableTrait;
-use Ork\Core\Filter\FilterInterface;
 use UnexpectedValueException;
 
 /**
  * Convert a state name to its abbreviation.
  */
-class NameToAbbreviation implements FilterInterface
+class NameToAbbreviation
 {
 
     use ConfigurableTrait;
+
+    protected const ERROR_NO_ABBREVIATION = 'Input value can not be converted to an abbreviation.';
 
     /**
      * Configurable trait parameters.
      *
      * @var array<string, mixed>
      */
-    protected $config = [
+    protected array $config = [
 
-        // Throw an exception on invalid input. Otherwise, return it untouched.
+        // If true, throw an exception on invalid input. If false, return it untouched.
         'abortOnInvalidInput' => true,
 
-        // Include territories that aren't states but have US mailing addresses.
+        // True to include US territories that aren't states.
         'includeTerritories' => false,
 
     ];
@@ -43,7 +44,7 @@ class NameToAbbreviation implements FilterInterface
      *
      * @var array<string>
      */
-    protected $states = [
+    protected array $states = [
         'alabama' => 'AL',
         'alaska' => 'AK',
         'arizona' => 'AZ',
@@ -102,7 +103,7 @@ class NameToAbbreviation implements FilterInterface
      *
      * @var array<string>
      */
-    protected $territories = [
+    protected array $territories = [
         'american samoa' => 'AS',
         'federated states of micronesia' => 'FM',
         'guam' => 'GU',
@@ -114,17 +115,17 @@ class NameToAbbreviation implements FilterInterface
     ];
 
     /**
-     * Filter a value.
+     * Convert a state name to its abbreviation.
      *
-     * @param mixed $value The value to filter.
+     * @param string $name The state name.
      *
-     * @return mixed The filtered value.
+     * @return string The state abbreviation.
      *
-     * @throws UnexpectedValueException If the input value can not be mapped to a state name.
+     * @throws UnexpectedValueException If the state name can not be converted to an abbreviation.
      */
-    public function filter($value)
+    public function filter(string $name): string
     {
-        $normalized = (string) preg_replace('/\s+/', ' ', strtolower(trim($value)));
+        $normalized = (string) preg_replace('/\s+/', ' ', strtolower(trim($name)));
         if (array_key_exists($normalized, $this->states) === true) {
             return $this->states[$normalized];
         }
@@ -135,9 +136,9 @@ class NameToAbbreviation implements FilterInterface
             return $this->territories[$normalized];
         }
         if ($this->getConfig('abortOnInvalidInput') === true) {
-            throw new UnexpectedValueException('Input value can not be mapped to a state name.');
+            throw new UnexpectedValueException(self::ERROR_NO_ABBREVIATION);
         }
-        return $value;
+        return $name;
     }
 
 }
