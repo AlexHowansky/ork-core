@@ -4,6 +4,7 @@
 
 * Added Filter\State\AbbreviationToName class.
 * Added Filter\State\NameToAbbreviation class.
+* Added Image\Gravatar class.
 * Added String\Base32 class.
 * Added String\Template class.
 * Updated dependencies.
