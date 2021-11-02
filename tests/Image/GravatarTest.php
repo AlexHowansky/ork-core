@@ -53,6 +53,14 @@ class GravatarTest extends TestCase
     }
 
     /**
+     * Verify that casting to a string doesn't throw an exception.
+     */
+    public function testToStringException()
+    {
+        $this->assertSame('', (string) new Gravatar());
+    }
+
+    /**
      * Verify that we've built the URI correctly.
      */
     public function testUri()

@@ -51,7 +51,11 @@ class Gravatar
      */
     public function __toString()
     {
-        return $this->getUri();
+        try {
+            return $this->getUri();
+        } catch (RuntimeException $e) {
+            return '';
+        }
     }
 
     /**
