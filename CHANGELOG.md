@@ -7,7 +7,10 @@
 * Added Image\Gravatar class.
 * Added String\Base32 class.
 * Added String\Template class.
+* Added PHPMetrics.
+* Migrated from Travis to Github Actions.
 * Updated dependencies.
+* This is the last version that supports PHP 7.3.
 
 ## 1.2.1
 
@@ -27,6 +30,7 @@
 * Updated dependencies.
 * Added PHPStan validation.
 * Moved wiki docs into this repo.
+* This is the last version that supports PHP 7.2.
 
 ## 1.0.1
 
