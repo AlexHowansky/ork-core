@@ -42,7 +42,7 @@ class NameToAbbreviation
     /**
      * The list of allowable states.
      *
-     * @var array<string>
+     * @var array<string, string>
      */
     protected array $states = [
         'alabama' => 'AL',
@@ -101,7 +101,7 @@ class NameToAbbreviation
     /**
      * The list of allowable territories.
      *
-     * @var array<string>
+     * @var array<string, string>
      */
     protected array $territories = [
         'american samoa' => 'AS',

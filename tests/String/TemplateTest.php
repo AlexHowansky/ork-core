@@ -23,7 +23,7 @@ class TemplateTest extends TestCase
     /**
      * Provider for testCustomDelimiters() method.
      *
-     * @return array<array>
+     * @return array<mixed>
      */
     public function providerForCustomDelimiters(): array
     {
@@ -73,7 +73,7 @@ class TemplateTest extends TestCase
     /**
      * Provider for testRender() method.
      *
-     * @return array<array>
+     * @return array<mixed>
      */
     public function providerForRender(): array
     {
@@ -121,7 +121,7 @@ class TemplateTest extends TestCase
      * Verify that basic rendering works as expected.
      *
      * @param string $template The template to render.
-     * @param array<string, mixed> $params The values to replace.
+     * @param array<string, string> $params The values to replace.
      * @param string $expect The output to expect.
      *
      * @dataProvider providerForRender

@@ -24,7 +24,7 @@ class Base32Test extends TestCase
     /**
      * Provider for testBadAlphabet() method.
      *
-     * @return array<array>
+     * @return array<mixed>
      */
     public function badAlphabetProvider(): array
     {
@@ -51,7 +51,7 @@ class Base32Test extends TestCase
     /**
      * Provider for testCustomAlphabet() method.
      *
-     * @return array<array>
+     * @return array<mixed>
      */
     public function customAlphabetProvider(): array
     {
@@ -65,7 +65,7 @@ class Base32Test extends TestCase
     /**
      * Provider for testEncodeDecode() method.
      *
-     * @return array<array>
+     * @return array<mixed>
      */
     public function encodeDecodeProvider(): array
     {
