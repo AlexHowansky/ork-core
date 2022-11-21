@@ -48,7 +48,7 @@ trait ConfigurableTrait
             is_array($this->config) === false
         ) {
             throw new LogicException(
-                'Class definition for ' . get_class($this) . ' must include a protected array attribute named config.'
+                'Class definition for ' . $this::class . ' must include a protected array attribute named config.'
             );
         }
         if ($config !== null) {
@@ -68,7 +68,7 @@ trait ConfigurableTrait
      *
      * @return mixed The filtered value.
      */
-    protected function filterConfig(string $name, $value = null)
+    protected function filterConfig(string $name, mixed $value = null)
     {
         $filterMethod = 'filterConfig' . ucfirst($name);
         if (method_exists($this, $filterMethod) === true) {
@@ -115,7 +115,7 @@ trait ConfigurableTrait
         if (file_exists($file) === false) {
             throw new RuntimeException('No such config file.');
         }
-        $data = json_decode((string) file_get_contents($file), true);
+        $data = json_decode((string) file_get_contents($file), true, 512, JSON_THROW_ON_ERROR);
         if ($data === null) {
             throw new RuntimeException('Invalid config file.');
         }
@@ -130,7 +130,7 @@ trait ConfigurableTrait
      *
      * @return self Allow method chaining.
      */
-    public function setConfig(string $name, $value): self
+    public function setConfig(string $name, mixed $value): self
     {
         // @phpstan-ignore-next-line
         $this->validateConfig($name)->config[$name] = $this->filterConfig($name, $value);

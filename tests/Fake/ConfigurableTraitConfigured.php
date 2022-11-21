@@ -41,7 +41,7 @@ class ConfigurableTraitConfigured
      *
      * @throws DomainException On invalid value.
      */
-    public function filterConfigKey3($value)
+    public function filterConfigKey3(mixed $value)
     {
         if ($value === 'this is a bad value') {
             throw new DomainException('Value must be boolean.');

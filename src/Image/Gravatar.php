@@ -14,11 +14,12 @@ namespace Ork\Core\Image;
 use DomainException;
 use Ork\Core\ConfigurableTrait;
 use RuntimeException;
+use Stringable;
 
 /**
  * Gravatar URI helper.
  */
-class Gravatar
+class Gravatar implements Stringable
 {
 
     use ConfigurableTrait;
@@ -58,8 +59,6 @@ class Gravatar
      * Validate the requested image size.
      *
      * @param int $size The image size to set.
-     *
-     * @return int
      *
      * @throws DomainException If the provided value is not in the acceptable range.
      */

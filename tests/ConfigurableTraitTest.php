@@ -13,6 +13,7 @@ namespace Ork\Core\Tests;
 
 use ArrayIterator;
 use DomainException;
+use JsonException;
 use LogicException;
 use org\bovigo\vfs\vfsStream;
 use Ork\Core\Tests\Fake\ConfigurableTraitConfigured;
@@ -42,8 +43,6 @@ class ConfigurableTraitTest extends TestCase
 
     /**
      * Test that the constructor works when passed an array.
-     *
-     * @return void
      */
     public function testConstructorArray(): void
     {
@@ -55,12 +54,10 @@ class ConfigurableTraitTest extends TestCase
 
     /**
      * Test that the constructor fails when passed a badly formatted file.
-     *
-     * @return void
      */
     public function testConstructorBadFile(): void
     {
-        $this->expectException(RuntimeException::class);
+        $this->expectException(JsonException::class);
         $file = vfsStream::setup()->url() . '/config.json';
         file_put_contents($file, 'fail');
         new ConfigurableTraitConfigured($file);
@@ -68,13 +65,11 @@ class ConfigurableTraitTest extends TestCase
 
     /**
      * Test that the constructor works when passed a file name.
-     *
-     * @return void
      */
     public function testConstructorFile(): void
     {
         $file = vfsStream::setup()->url() . '/config.json';
-        file_put_contents($file, json_encode($this->config));
+        file_put_contents($file, json_encode($this->config, JSON_THROW_ON_ERROR));
         $this->assertSame(
             $this->config,
             (new ConfigurableTraitConfigured($file))->getConfigs()
@@ -83,8 +78,6 @@ class ConfigurableTraitTest extends TestCase
 
     /**
      * Test that the constructor fails when passed an integer.
-     *
-     * @return void
      */
     public function testConstructorInteger(): void
     {
@@ -95,8 +88,6 @@ class ConfigurableTraitTest extends TestCase
 
     /**
      * Test that the constructor works when passed an object implementing Iterable.
-     *
-     * @return void
      */
     public function testConstructorIterable(): void
     {
@@ -108,8 +99,6 @@ class ConfigurableTraitTest extends TestCase
 
     /**
      * Test that the constructor fails when passed a file name that doesn't exist.
-     *
-     * @return void
      */
     public function testConstructorNoFile(): void
     {
@@ -119,8 +108,6 @@ class ConfigurableTraitTest extends TestCase
 
     /**
      * Test that the constructor fails when passed an object which does not implement Iterator.
-     *
-     * @return void
      */
     public function testConstructorNotIterable(): void
     {
@@ -131,8 +118,6 @@ class ConfigurableTraitTest extends TestCase
 
     /**
      * Test that a defined setter filter gets invoked.
-     *
-     * @return void
      */
     public function testFilterException(): void
     {
@@ -142,8 +127,6 @@ class ConfigurableTraitTest extends TestCase
 
     /**
      * Test that the initial configured values get set and returned correctly.
-     *
-     * @return void
      */
     public function testGetDefaultValue(): void
     {
@@ -155,8 +138,6 @@ class ConfigurableTraitTest extends TestCase
 
     /**
      * Test that we get a failure when an object is defined without a $config attribute.
-     *
-     * @return void
      */
     public function testNoConfigDefined(): void
     {
@@ -169,8 +150,6 @@ class ConfigurableTraitTest extends TestCase
 
     /**
      * Test that array config values set and get correctly.
-     *
-     * @return void
      */
     public function testSetAndGetArray(): void
     {
@@ -185,14 +164,12 @@ class ConfigurableTraitTest extends TestCase
 
     /**
      * Test that integer config values set and get correctly.
-     *
-     * @return void
      */
     public function testSetAndGetInteger(): void
     {
         $fake = new ConfigurableTraitConfigured();
         foreach (array_keys($this->config) as $key) {
-            $value = mt_rand();
+            $value = random_int(0, mt_getrandmax());
             $fake->setConfig($key, $value);
             $this->assertSame($value, $fake->getConfig($key));
         }
@@ -200,8 +177,6 @@ class ConfigurableTraitTest extends TestCase
 
     /**
      * Test that object config values set and get correctly.
-     *
-     * @return void
      */
     public function testSetAndGetObject(): void
     {
@@ -217,8 +192,6 @@ class ConfigurableTraitTest extends TestCase
 
     /**
      * Test that string config values set and get correctly.
-     *
-     * @return void
      */
     public function testSetAndGetString(): void
     {
@@ -232,8 +205,6 @@ class ConfigurableTraitTest extends TestCase
 
     /**
      * Trying to set a config parameter that doesn't exist should error.
-     *
-     * @return void
      */
     public function testSetInvalidKey(): void
     {

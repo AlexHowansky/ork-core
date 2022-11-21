@@ -13,15 +13,16 @@
         }
     ],
     "require": {
-        "php": ">=7.4.0"
+        "php": "^8.0"
     },
     "require-dev": {
         "mikey179/vfsstream": "^1.6",
-        "ork/phpcs": "^2.7",
+        "ork/phpcs": "^2.8",
         "phpcompatibility/php-compatibility": "^9.3",
         "phpmetrics/phpmetrics": "^2.8",
-        "phpstan/phpstan": "^1.8",
+        "phpstan/phpstan": "^1.9",
         "phpunit/phpunit": "^9.5",
+        "rector/rector": "^0.14",
         "roave/security-advisories": "dev-master"
     },
     "autoload": {
@@ -40,6 +41,7 @@
         "metrics": "phpmetrics --config=phpmetrics.json",
         "phpcs": "phpcs",
         "phpstan": "phpstan analyze",
+        "rector": "rector --dry-run --clear-cache",
         "test": "phpunit --no-coverage"
     },
     "config": {

@@ -43,8 +43,6 @@ class Template
      * Render the template.
      *
      * @param array<string, string> $params The replacement values to render into the template.
-     *
-     * @return string
      */
     public function render(array $params): string
     {

@@ -118,8 +118,6 @@ class Base32
      *
      * @param string $alphabet The alphabet to use.
      *
-     * @return string
-     *
      * @throws DomainException On invalid input.
      */
     protected function filterConfigAlphabet(string $alphabet): string

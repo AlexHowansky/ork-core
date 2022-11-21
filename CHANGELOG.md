@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.5.0
+
+* Update to require PHP 8.0.
+
 ## 1.4.1
 
 * Updated PHPStan to 1.1.
