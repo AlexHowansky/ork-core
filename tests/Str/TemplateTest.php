@@ -9,9 +9,9 @@
  * @link      https://github.com/AlexHowansky/ork-core
  */
 
-namespace Ork\Core\Tests\String;
+namespace Ork\Core\Tests\Str;
 
-use Ork\Core\String\Template;
+use Ork\Core\Str\Template;
 use PHPUnit\Framework\TestCase;
 
 /**

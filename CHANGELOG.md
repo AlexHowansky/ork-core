@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2.0.0
+
+* Changed String namespace to Str to avoid keyword conflicts.
+* Updated Str\Base32 to have configurable padding.
+
 ## 1.5.0
 
 * Update to require PHP 8.0.

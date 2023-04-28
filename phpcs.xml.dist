@@ -2,10 +2,6 @@
 <ruleset name="Ork Core">
     <rule ref="Ork"/>
     <rule ref="PHPCompatibility"/>
-    <rule ref="PHPCompatibility.Keywords.ForbiddenNamesAsDeclared.stringFound">
-        <exclude-pattern>src/String/*</exclude-pattern>
-        <exclude-pattern>tests/String/*</exclude-pattern>
-    </rule>
     <rule ref="Squiz.Arrays.ArrayDeclaration.MultiLineNotAllowed">
         <exclude-pattern>src/String/Base32.php</exclude-pattern>
     </rule>

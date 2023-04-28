@@ -13,6 +13,7 @@ Core bits of the Ork toolset.
 
 * PHP 8.0
 * PHP 8.1
+* PHP 8.2
 
 ## Installation
 

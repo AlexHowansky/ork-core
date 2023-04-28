@@ -9,7 +9,7 @@
  * @link      https://github.com/AlexHowansky/ork-core
  */
 
-namespace Ork\Core\String;
+namespace Ork\Core\Str;
 
 use Ork\Core\ConfigurableTrait;
 

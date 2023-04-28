@@ -1,4 +1,4 @@
-# \Ork\Core\String\Template
+# \Ork\Core\Str\Template
 
 A simple template renderer.
 
@@ -12,7 +12,7 @@ The template string is specified via the `template` configuration parameter. It
 should contain delimited tags as placeholders for to be replaced.
 
 ```php
-use Ork\Core\String\Template;
+use Ork\Core\Str\Template;
 
 $template = new Template(['template' => "Name: {{name}}\nDOB: {{dob}}"]);
 ```
@@ -35,7 +35,7 @@ By default, template tags are delimited by `{{` and `}}`. This can be changed
 via the `delimiterStart` and `delimiterEnd` configuration parameters.
 
 ```php
-use Ork\Core\String\Template;
+use Ork\Core\Str\Template;
 
 $template = new Template([
     'delimiterStart' => '<',

@@ -1,4 +1,4 @@
-# \Ork\Core\String\Base32
+# \Ork\Core\Str\Base32
 
 BASE32 encoding can be useful in cases where one might normally use BASE64 but
 a case-insensitive result is needed.
@@ -10,7 +10,7 @@ a case-insensitive result is needed.
 ## Encoding
 
 ```php
-use Ork\Core\String\Base32;
+use Ork\Core\Str\Base32;
 
 $base32 = new Base32();
 $encoded = $base32->encode($plaintext);
@@ -19,7 +19,7 @@ $encoded = $base32->encode($plaintext);
 ## Decoding
 
 ```php
-use Ork\Core\String\Base32;
+use Ork\Core\Str\Base32;
 
 $base32 = new Base32();
 $plaintext = $base32->decode($encoded);

@@ -9,7 +9,7 @@
  * @link      https://github.com/AlexHowansky/ork-core
  */
 
-namespace Ork\Core\String;
+namespace Ork\Core\Str;
 
 use DomainException;
 use Ork\Core\ConfigurableTrait;
@@ -25,6 +25,7 @@ class Base32
     protected const ERROR_INVALID_ALPHABET = 'Alphabet must have 32 unique case-insensitive characters.';
     protected const ERROR_INVALID_CHARACTER = 'Invalid character in input.';
     protected const ERROR_INVALID_INPUT = 'Invalid input.';
+    protected const ERROR_INVALID_PAD_CHARACTER = 'Invalid pad character.';
 
     /**
      * Configurable trait parameters.
@@ -35,6 +36,9 @@ class Base32
 
         // The characters to use for encoding. Defaults to RFC4648.
         'alphabet' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567',
+
+        // The charater to pad the encoded string with.
+        'padCharacter' => '=',
 
     ];
 
@@ -51,10 +55,12 @@ class Base32
     {
 
         // Make sure we have a valid data string.
-        $mod = strlen($data) % 8;
-        if ($mod === 1 || $mod === 3 || $mod === 6) {
+        if (strlen($data) % 8 !== 0) {
             throw new DomainException(self::ERROR_INVALID_INPUT);
         }
+
+        // Trim the padding.
+        $data = rtrim($data, $this->getConfig('padCharacter'));
 
         // Convert the data to a binary string.
         $bits = '';
@@ -66,17 +72,15 @@ class Base32
             $bits .= sprintf('%05b', $index);
         }
 
-        // Make sure padding is all zeroes.
-        if (preg_match('/[^0]/', substr($bits, 0 - strlen($bits) % 8)) === 1) {
-            throw new DomainException('Invalid input.');
-        }
-
         // Decode the binary string.
         $output = '';
         foreach (str_split($bits, 8) as $chunk) {
+            if (strlen($chunk) < 8) {
+                continue;
+            }
             $output .= chr((int) bindec($chunk));
         }
-        return rtrim($output);
+        return $output;
 
     }
 
@@ -89,6 +93,10 @@ class Base32
      */
     public function encode(string $data): string
     {
+
+        if ($data === '') {
+            return '';
+        }
 
         // Convert the data to a binary string.
         $bits = '';
@@ -109,6 +117,13 @@ class Base32
             $output .= substr($this->getConfig('alphabet'), (int) bindec($chunk), 1);
         }
 
+        // Add padding.
+        $len  = strlen($output);
+        $mod = $len % 8;
+        if ($mod !== 0) {
+            $output = str_pad($output, $len + 8 - $mod, $this->getConfig('padCharacter'), STR_PAD_RIGHT);
+        }
+
         return $output;
 
     }
@@ -125,7 +140,21 @@ class Base32
         if (count(array_unique(str_split(strtoupper($alphabet)))) !== 32) {
             throw new DomainException(self::ERROR_INVALID_ALPHABET);
         }
+        if (str_contains($alphabet, $this->getConfig('padCharacter')) === true) {
+            throw new DomainException(self::ERROR_INVALID_PAD_CHARACTER);
+        }
         return $alphabet;
+    }
+
+    protected function filterConfigPadCharacter(string $padCharacter): string
+    {
+        if (strlen($padCharacter) > 1) {
+            throw new DomainException(self::ERROR_INVALID_PAD_CHARACTER);
+        }
+        if (str_contains($this->getConfig('alphabet'), $padCharacter) === true) {
+            throw new DomainException(self::ERROR_INVALID_PAD_CHARACTER);
+        }
+        return $padCharacter;
     }
 
 }

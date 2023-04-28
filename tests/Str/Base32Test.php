@@ -9,10 +9,10 @@
  * @link      https://github.com/AlexHowansky/ork-core
  */
 
-namespace Ork\Core\Tests\String;
+namespace Ork\Core\Tests\Str;
 
 use DomainException;
-use Ork\Core\String\Base32;
+use Ork\Core\Str\Base32;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -56,31 +56,27 @@ class Base32Test extends TestCase
     public function customAlphabetProvider(): array
     {
         return [
-            ['0123456789~!@#$%^&*()-+=[]{};:<>'],
+            ['0123456789~!@#$%^&*()-+|[]{};:<>'],
             ['abcdefghijklmnopqrstuvwxyz234567'],
             ['0123456789abcdefghijklmnopqrstuv'],
         ];
     }
 
     /**
-     * Provider for testEncodeDecode() method.
+     * Provider for testEncodeDecode() met0khod.
      *
      * @return array<mixed>
      */
     public function encodeDecodeProvider(): array
     {
         return [
-            [
-                '',
-                'AA',
-            ],
-            [
-                'foo',
-                'MZXW6',
-            ],
+            ['', ''],
+            [' ', 'EA======'],
+            ['0', 'GA======'],
+            ['foo$200', 'MZXW6JBSGAYA====' ],
             [
                 'this is a test do not pass go do not collect $200',
-                'ORUGS4ZANFZSAYJAORSXG5BAMRXSA3TPOQQHAYLTOMQGO3ZAMRXSA3TPOQQGG33MNRSWG5BAEQZDAMA',
+                'ORUGS4ZANFZSAYJAORSXG5BAMRXSA3TPOQQHAYLTOMQGO3ZAMRXSA3TPOQQGG33MNRSWG5BAEQZDAMA=',
             ],
         ];
     }
@@ -98,18 +94,28 @@ class Base32Test extends TestCase
     }
 
     /**
+     * Verify that bad padding throws the proper exception.
+     */
+    public function testBadPadCharacter(): void
+    {
+        $this->expectException(DomainException::class);
+        $this->expectExceptionMessage('Invalid pad character.');
+        (new Base32())->setConfig('padCharacter', '==');
+    }
+
+    /**
      * Verify that custom alphabets works as expected.
      *
      * @dataProvider customAlphabetProvider
      */
     public function testCustomAlphabet(string $alphabet): void
     {
-        $input = base64_encode(random_bytes(512));
+        $input = random_bytes(512);
         $b32 = (new Base32())->setConfig('alphabet', $alphabet);
         $encoded = $b32->encode($input);
         $this->assertNotSame($input, $encoded);
         foreach (str_split($encoded) as $char) {
-            $this->assertStringContainsString($char, $b32->getConfig('alphabet'));
+            $this->assertStringContainsString($char, $b32->getConfig('alphabet') . $b32->getConfig('padCharacter'));
         }
         $this->assertSame($input, $b32->decode($encoded));
         $this->assertSame($input, $b32->decode(strtolower($encoded)));
@@ -139,7 +145,7 @@ class Base32Test extends TestCase
     {
         $this->expectException(DomainException::class);
         $this->expectExceptionMessage('Invalid character in input.');
-        (new Base32())->decode('1234$');
+        (new Base32())->decode('1234$===');
     }
 
     /**
@@ -160,6 +166,32 @@ class Base32Test extends TestCase
         $this->expectException(DomainException::class);
         $this->expectExceptionMessage('Invalid input.');
         (new Base32())->decode('23');
+    }
+
+    /**
+     * Verify that the pad character is not in the alphabet.
+     */
+    public function testPadNotInAlphabetPadFirst(): void
+    {
+        $this->expectException(DomainException::class);
+        $this->expectExceptionMessage('Invalid pad character.');
+        $b32 = new Base32();
+        $b32->setConfig('alphabet', 'ABCDEFGHIJKLMNOP|RSTUVWXYZ234567');
+        $b32->setConfig('padCharacter', 'Q');
+        $b32->setConfig('alphabet', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567');
+    }
+
+    /**
+     * Verify that the pad character is not in the alphabet.
+     */
+    public function testPadNotInAlphabetPadLast(): void
+    {
+        $this->expectException(DomainException::class);
+        $this->expectExceptionMessage('Invalid pad character.');
+        $b32 = new Base32();
+        $b32->setConfig('padCharacter', '=');
+        $b32->setConfig('alphabet', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567');
+        $b32->setConfig('padCharacter', 'Q');
     }
 
 }

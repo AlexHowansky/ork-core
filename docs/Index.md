@@ -13,8 +13,8 @@
 
 ## String Utilities
 
-* [String\Base32](String/Base32.md)
-* [String\Template](String/Template.md)
+* [Str\Base32](Str/Base32.md)
+* [Str\Template](Str/Template.md)
 
 ## Traits
 
