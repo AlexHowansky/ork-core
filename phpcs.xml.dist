@@ -2,10 +2,7 @@
 <ruleset name="Ork Core">
     <rule ref="Ork"/>
     <rule ref="PHPCompatibility"/>
-    <rule ref="Squiz.Arrays.ArrayDeclaration.MultiLineNotAllowed">
-        <exclude-pattern>src/String/Base32.php</exclude-pattern>
-    </rule>
-    <config name="php_version" value="80028"/>
+    <config name="php_version" value="80029"/>
     <config name="testVersion" value="8.0-"/>
     <file>src</file>
     <file>tests</file>
